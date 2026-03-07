@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]
+then
+    echo "Usage: $0 <project>"
+    exit 1
+fi
+
+project=$1
+
+if [ ! -d $project ]
+then
+    echo "$0: $project directory does not exist"
+    exit 1
+fi
+cd $project
+
+if [ ! -d build ]
+then 
+    mkdir build
+fi
+cd build
+
+cmake .. \
+  -DCMAKE_C_COMPILER=/usr/bin/arm-none-eabi-gcc \
+  -DCMAKE_CXX_COMPILER=/usr/bin/arm-none-eabi-g++ \
+  -DCMAKE_ASM_COMPILER=/usr/bin/arm-none-eabi-gcc \
+  -DPICO_SDK_PATH=~/projects/pico-sdk
+
+make
