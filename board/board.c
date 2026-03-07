@@ -15,23 +15,29 @@
     #define FALSE 0
 #endif
 
-#define GPIO_BASE 0x40014000
+#define GPIO 0x40014000
 #define GPIO_CTRL_OFFSET 0x4
 #define GPIO_STEP 0x8
 
-#define GPIO_CTRL(n) ((volatile uint32_t *)(GPIO_BASE + ((n) * GPIO_STEP) + GPIO_CTRL_OFFSET))
+#define GPIO_CTRL(n) ((volatile uint32_t *)(GPIO + ((n) * GPIO_STEP) + GPIO_CTRL_OFFSET))
 
 #define GPIO_OEOVER_BIT 12
 #define GPIO_OUTOVER_BIT 8
 
+#define SIO 0xd0000000
+#define SIO_GPIO_OUT_SET (* (volatile uint32_t *)(SIO + 0x14))
+#define SIO_GPIO_OUT_CLR (* (volatile uint32_t *)(SIO + 0x18))
+#define SIO_GPIO_OE_SET (* (volatile uint32_t *)(SIO + 0x24))
 
 
 void blink_easy();
 void blink_gpio(); 
+void blink_sio(); 
 
 int main(int argc, char *argv)
 {
     // You can switch these out, they do the same thing
+    //blink_sio();
     blink_gpio();
     //blink_easy();
 
@@ -81,25 +87,59 @@ void blink_gpio()
     // Get the pin we would like to control
     pin_25_ctrl = GPIO_CTRL(pin);
     
-    // Override the pin to output mode
-    *pin_25_ctrl ^= (0x3 << GPIO_OEOVER_BIT);
-    
-    // Set the pin to high/on 
-    *pin_25_ctrl ^= (0x3 << GPIO_OUTOVER_BIT);
+    // Set the pin to output mode
+    *pin_25_ctrl = (3 << GPIO_OEOVER_BIT | 3 << GPIO_OUTOVER_BIT);
     
     while (TRUE)
     {
         sleep_ms(LED_DELAY_MS);
 
         // Set the pin to low/off
-        *pin_25_ctrl ^= (0x1 << GPIO_OUTOVER_BIT);
+        *pin_25_ctrl ^= (1 << GPIO_OUTOVER_BIT);
 
         sleep_ms(LED_DELAY_MS);
 
         // Set the pin back to high/on
-        *pin_25_ctrl ^= (0x1 << GPIO_OUTOVER_BIT);
+        *pin_25_ctrl ^= (1 << GPIO_OUTOVER_BIT);
     }
     
     return;     
+}
+
+
+/* Function: blink_sio
+ * Description:
+ *  Turns the LED on the board on and off through the SIO registers
+ *  SIO: single-cycle input/output
+ *
+ * Input: none
+ * Output: none
+ */
+void blink_sio()
+{
+    int pin_25 = 25;
+    volatile uint32_t* pin_25_ctrl;
+    
+    // Get the pin we would like to control
+    pin_25_ctrl = GPIO_CTRL(pin_25);
+
+    // Connect the pin to the SIO
+    *pin_25_ctrl = 5;
+
+    // Set the pin to output mode
+    SIO_GPIO_OE_SET = (1 << pin_25); 
+
+    while (TRUE)
+    {
+        // Set the pin to high (on)
+        SIO_GPIO_OUT_SET = (1 << pin_25);
+        sleep_ms(LED_DELAY_MS);
+
+        // Set the pin to low (off)
+        SIO_GPIO_OUT_CLR = (1 << pin_25);
+        sleep_ms(LED_DELAY_MS);
+    }
+    
+    return;
 }
 
