@@ -6,7 +6,7 @@ This project has three different functions that make the board LED blink:
 * blink_easy()
     * Blink the LED using the pico SDK 
 * blink_gpio()
-    * Blink the LED controlling the GPIO memory address (OEOVER and OUTOVER) 
+    * Blink the LED controlling the GPIO address segment (OEOVER and OUTOVER) 
 * blink_sio()
     * Blink the LED via SIO (single-cycle IO) by connecting GPIO pin 25 (LED) and controlling it through the SIO address segment
 
