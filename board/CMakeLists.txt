@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.31)
+
 include(../pico_sdk_import.cmake)
+
+include_directories(../include)
+
 project(board)
 
 pico_sdk_init()
