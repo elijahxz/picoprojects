@@ -5,4 +5,4 @@ This repo contains all of the pico projects I have worked on. My goal is to make
 ## Projects
 When I have completed a project, I will list it here with a description of what it does.
 * Board
-    * SDK, GPIO, and SIO control of the LED on the board
+    * SDK, GPIO, and SIO control of the board's LED
