@@ -8,12 +8,12 @@ fi
 
 project=$1
 
-if [ ! -d $project ]
+if [ ! -d $pico/$project ]
 then
-    echo "$0: $project directory does not exist"
+    echo "$0: $pico/$project directory does not exist"
     exit 1
 fi
-cd $project
+cd $pico/$project
 
 if [ ! -d build ]
 then 
@@ -28,3 +28,9 @@ cmake .. \
   -DPICO_SDK_PATH=~/projects/pico-sdk
 
 make
+
+if [ $? -eq 0 ]
+then 
+    cd $pico
+    ctags -R .
+fi
