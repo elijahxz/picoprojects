@@ -23,5 +23,13 @@
 #define SIO_GPIO_OUT_CLR (* (volatile uint32_t *)(SIO + 0x18))
 #define SIO_GPIO_OE_SET (* (volatile uint32_t *)(SIO + 0x24))
 
+#define TIME 0x40054000
+// Bits 32-63 of the 64 bit nanosecond timer
+#define TIMEAWH (* (volatile uint32_t *)(TIME + 0x24))
+// Bits 0-31 of the 64 bit nanosecond timer
+#define TIMEAWL (* (volatile uint32_t *)(TIME + 0x28))
+
+void micro_wait(uint64_t);
+void milli_wait(int);
 
 #endif

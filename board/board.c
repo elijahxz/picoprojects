@@ -39,6 +39,7 @@ void blink_easy()
     {
         gpio_put(PICO_DEFAULT_LED_PIN, TRUE);
         sleep_ms(LED_DELAY_MS);
+
         gpio_put(PICO_DEFAULT_LED_PIN, FALSE);
         sleep_ms(LED_DELAY_MS);
     }
@@ -71,12 +72,12 @@ void blink_gpio()
     
     while (TRUE)
     {
-        sleep_ms(LED_DELAY_MS);
+        milli_wait(LED_DELAY_MS);
 
         // Set the pin to low/off
         *pin_25_ctrl ^= (1 << GPIO_OUTOVER_BIT);
-
-        sleep_ms(LED_DELAY_MS);
+    
+        milli_wait(LED_DELAY_MS);
 
         // Set the pin back to high/on
         *pin_25_ctrl ^= (1 << GPIO_OUTOVER_BIT);
@@ -112,11 +113,11 @@ void blink_sio()
     {
         // Set the pin to high (on)
         SIO_GPIO_OUT_SET = (1 << pin_25);
-        sleep_ms(LED_DELAY_MS);
+        milli_wait(LED_DELAY_MS);
 
         // Set the pin to low (off)
         SIO_GPIO_OUT_CLR = (1 << pin_25);
-        sleep_ms(LED_DELAY_MS);
+        milli_wait(LED_DELAY_MS);
     }
     
     return;
