@@ -1,0 +1,24 @@
+.program light_sm
+
+; Set the output of the pin to drive high
+set pindirs, 1
+
+loop:
+    ; Pause execution until we have data incoming from tx fifo
+    pull block
+
+    ; Grab a bit from osr to the scratch register
+    out x, 1
+
+    ; Logic to set pin to high or low
+    jmp !x zero_bit
+
+; Sets the pin high
+one_bit:
+    set pins, 1
+    jmp loop
+
+; Sets the pin low
+zero_bit:
+    set pins, 0
+    jmp loop

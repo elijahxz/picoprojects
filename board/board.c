@@ -68,7 +68,7 @@ void blink_gpio()
     pin_25_ctrl = GPIO_CTRL(pin);
     
     // Set the pin to output mode
-    *pin_25_ctrl = (3 << GPIO_OEOVER_BIT | 3 << GPIO_OUTOVER_BIT);
+    *pin_25_ctrl = (3 << GPIO_OEOVER_BIT);
     
     while (TRUE)
     {
