@@ -9,3 +9,7 @@ Although I'm interested in baremetal c programming, I do include the pico sdk du
 When I have completed a project, I will list it here with a description of what it does.
 * **Board**
     * SDK, GPIO, and SIO control of the board's LED
+    * [Board README](board/README.md)
+* **Light_SM**
+    * PIO SM Control to light LEDs through GPIO pins
+    * [Light_SM README](light_sm/README.md)
