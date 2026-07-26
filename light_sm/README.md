@@ -36,3 +36,9 @@ The goal of this project was to interact with the pico's state machines. It ligh
         * Note: Why a 1k ohm resistor? No clue! Just guessing here.
 
 
+# Light SM Demo
+[Light SM Demo](https://github.com/user-attachments/assets/9258355a-86f2-4e69-be90-c102ec5753b6)
+
+
+
+
